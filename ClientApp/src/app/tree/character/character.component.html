@@ -1,0 +1,20 @@
+<div
+    #characterCard
+    [attr.id]="character.id + 'c'"
+    class="character-card d-flex align-items-center flex-column" 
+    cdkDragBoundary=".tree-field" 
+    cdkDrag
+    (cdkDragStarted)="handleDragStart()"
+    (cdkDragMoved)="onDragMoved($event)"
+    (cdkDragEnded)="onDragEnded($event)"
+    [style.top]="character.y + 'px'"
+    [style.left]="character.x + 'px'"
+    (click)="onClick()"
+    [title]="character.name">
+    <p class="mx-2 my-0 p-0">{{character.name}}</p>
+    <div class="img-background">
+        <img
+            [src]="character.imageSrc"
+            alt="Card image cap">
+    </div>
+</div>

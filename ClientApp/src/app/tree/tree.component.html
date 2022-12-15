@@ -1,0 +1,20 @@
+<div class="background-field">
+    <div 
+        class="tree-field" 
+        style="z-index: 1;" 
+        cdkDrag 
+        (cdkDragEnded)="onDragEnded($event)"
+        (cdkDragMoved)="onDragMoved($event)"
+    >
+        <ng-container *ngFor="let connection of connections">
+            <character-connection [connection]="connection"></character-connection>
+        </ng-container>
+        <ng-container *ngFor="let character of characters">
+            <character-card [parentPosition]="position" [character]="character"
+                (choose)="selectCharacter($event)" (drag)="onCharacterCardDrag($event)"></character-card>
+        </ng-container>
+    </div>
+    <ng-container *ngIf="selectedCharacter">
+        <app-description [character]="selectedCharacter" (close)="unselectCharacter()"></app-description>
+    </ng-container>
+</div>
