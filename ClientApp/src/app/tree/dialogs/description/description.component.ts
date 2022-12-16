@@ -12,8 +12,13 @@ export class DescriptionComponent {
     @Input() character: Character;
     @Input() connections: CharacterConnection[];
     @Output() close = new EventEmitter();
+    @Output() deleteConnection = new EventEmitter<CharacterConnection>();
     
     onClose() {
       this.close.emit();
+    }
+
+    onDeleteConnection(connection: CharacterConnection) {
+      this.deleteConnection.emit(connection);
     }
 }

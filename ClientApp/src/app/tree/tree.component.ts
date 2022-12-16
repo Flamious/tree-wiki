@@ -234,7 +234,15 @@ export class TreeComponent implements AfterViewInit {
   addConnection(connection: Connection) {
     this.connections.push(connection);
     this.setSeletedCharacterConnections();
-    
+
+    this.buildLines();
+  }
+
+  deleteConnection(connection: CharacterConnection) {
+    this.connections = this.connections.filter(item => {
+      return !(item.from === this.selectedCharacter.id && item.to === connection.connectionWith.id);
+    })
+    this.setSeletedCharacterConnections();
     this.buildLines();
   }
 }

@@ -17,7 +17,12 @@
         </ng-container>
     </div>
     <ng-container *ngIf="isCharacterInfoOpened">
-        <app-description [character]="selectedCharacter" [connections]="selectedCharacterConnections" (close)="closeCharacterInfo()"></app-description>
+        <app-description 
+            [character]="selectedCharacter" 
+            [connections]="selectedCharacterConnections" 
+            (close)="closeCharacterInfo()"
+            (deleteConnection)="deleteConnection($event)"
+        ></app-description>
     </ng-container>
     <ng-container *ngIf="isNewConnectionOpened">
         <app-add-connection 
