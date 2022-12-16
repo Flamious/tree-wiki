@@ -10,7 +10,8 @@
     [style.top]="character.y + 'px'"
     [style.left]="character.x + 'px'"
     (click)="onClick()"
-    [title]="character.name">
+    [title]="character.name"
+    [class.selected]="selected">
     <p class="mx-2 my-0 p-0">{{character.name}}</p>
     <div class="img-background">
         <img

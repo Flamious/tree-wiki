@@ -1,3 +1,8 @@
+<app-sidebar 
+    (openCharacterInfo)="openCharacterInfo()" 
+    (openAddConnection)="openAddNewConnection()"
+    [isCharacterSelected]="selectedCharacter !== null"
+></app-sidebar>
 <div class="background-field">
     <div 
         class="tree-field" 
@@ -6,15 +11,21 @@
         (cdkDragEnded)="onDragEnded($event)"
         (cdkDragMoved)="onDragMoved($event)"
     >
-        <ng-container *ngFor="let connection of connections">
-            <character-connection [connection]="connection"></character-connection>
-        </ng-container>
         <ng-container *ngFor="let character of characters">
-            <character-card [parentPosition]="position" [character]="character"
-                (choose)="selectCharacter($event)" (drag)="onCharacterCardDrag($event)"></character-card>
+            <character-card [parentPosition]="position" [character]="character" [selected]="isSelected(character.id)"
+                (choose)="selectCharacter($event)" (drag)="onCharacterCardDrag()"></character-card>
         </ng-container>
     </div>
-    <ng-container *ngIf="selectedCharacter">
-        <app-description [character]="selectedCharacter" (close)="unselectCharacter()"></app-description>
+    <ng-container *ngIf="isCharacterInfoOpened">
+        <app-description [character]="selectedCharacter" [connections]="selectedCharacterConnections" (close)="closeCharacterInfo()"></app-description>
+    </ng-container>
+    <ng-container *ngIf="isNewConnectionOpened">
+        <app-add-connection 
+            [selectedCharacter]="selectedCharacter" 
+            [selectedCharacterConnections]="selectedCharacterConnections" 
+            [characters]="characters" 
+            (close)="closeAddNewConnection()"
+            (admit)="addConnection($event)"
+        ></app-add-connection>
     </ng-container>
 </div>

@@ -4,14 +4,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TreeComponent } from './tree/tree.component';
 import { CharacterComponent } from './tree/character/character.component';
-import { HeaderComponent } from './header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { DescriptionComponent } from './tree/description/description.component';
+import { DescriptionComponent } from './tree/dialogs/description/description.component';
 import { MatIconModule } from '@angular/material';
-import { ConnectionComponent } from './tree/connection/connection.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { AddConnectionComponent } from './tree/dialogs/add-connection/add-connection.component';
 
 
 const routes: Routes = [
@@ -23,9 +26,9 @@ const routes: Routes = [
     AppComponent,
     TreeComponent,
     CharacterComponent,
-    HeaderComponent,
     DescriptionComponent,
-    ConnectionComponent
+    SidebarComponent,
+    AddConnectionComponent
   ],
   imports: [
     BrowserModule, 
@@ -34,7 +37,10 @@ const routes: Routes = [
     RouterModule.forRoot(routes), 
     DragDropModule,
     MatToolbarModule,
-    MatIconModule],
+    MatIconModule,
+    DropdownModule,
+    NoopAnimationsModule,
+    InputTextModule],
   providers: [],
   bootstrap: [AppComponent]
 })

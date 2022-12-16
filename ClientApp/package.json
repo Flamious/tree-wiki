@@ -23,6 +23,8 @@
     "bootstrap": "^5.2.3",
     "leader-line": "^1.0.7",
     "material-design-icons": "^3.0.1",
+    "primeicons": "^6.0.1",
+    "primeng": "^14.2.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

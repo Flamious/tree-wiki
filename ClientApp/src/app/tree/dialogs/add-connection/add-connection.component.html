@@ -1,0 +1,65 @@
+<div class="dialog d-flex justify-content-center align-items-center">
+    <div class="background" (click)="onClose()"></div>
+    <div class="data">
+        <div class="d-flex m-0 p-0 header">
+            <h5 class="flex-fill mx my">Добавить связь</h5>
+            <div class="d-flex m-0 p-0 justify-content-end align-items-start">
+                <button class="top-button m-0 p-0" (click)="onClose()">
+                    <span class="material-icons mx my">close</span>
+                </button>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 1vh;">
+            <div class="col d-flex align-items-center justify-content-center">
+                <img [src]="selectedCharacter.imageSrc" alt="Card image cap">
+            </div>
+            <div class="col d-flex align-items-center justify-content-center">
+                <img *ngIf="characterTo; else noImage" [src]="characterTo.imageSrc" alt="Card image cap">
+                <ng-template #noImage>
+                    <h5>-</h5>
+                </ng-template>
+            </div>
+        </div>
+        <div class="row p-0 m-0">
+            <div class="col">
+                <input 
+                    type="text" 
+                    style="
+                        width: 100%; 
+                        height: 5vh; 
+                        font-size: 3vh; 
+                        padding: 0; 
+                        border-width: 0.1vh; 
+                        padding-left: 1vw; 
+                        margin-top: 2vh"  
+                    disabled 
+                    [value]="selectedCharacter.name" 
+                    pInputText 
+                />
+            </div>
+            <div class="col">
+                <p-dropdown [options]="availableCharacters" [(ngModel)]="characterTo" optionLabel="name"></p-dropdown>
+            </div>
+        </div>
+        <div style="padding-left: 1vw; padding-right: 1vw;">
+            <input 
+            type="text" 
+            style="
+                width: 100%; 
+                height: 5vh; 
+                font-size: 3vh; 
+                padding: 0; 
+                border-width: 0.1vh; 
+                padding-left: 1vw;
+                margin-top: 2vh;" 
+            [(ngModel)]="title" 
+            pInputText
+            placeholder="Название связи"
+        />
+        </div>
+        <div class="buttons d-flex justify-content-end" style="padding-left: 1vw; padding-right: 1vw;">
+            <button class="btn btn-primary" (click)="onAdmit()" [disabled]="!characterTo || !title">Сохранить</button>
+            <button class="btn btn-outline-secondary" style="margin-left: 1vw;" (click)="onClose()">Отмена</button>
+        </div>
+    </div>
+</div>

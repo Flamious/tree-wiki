@@ -1,0 +1,93 @@
+:host {
+    font-size: 2vh;
+
+    .mx {
+        margin-left: 1vw;
+        margin-right: 1vw;
+    }
+
+    .my {
+        margin-top: 1vh;
+        margin-bottom: 1vh;
+    }
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        opacity: 0.5;
+        z-index: 8001;
+    }
+
+    .data {
+        background-color: white;
+        z-index: 8002;
+        width: 75vw;
+        height: 75vh;
+    }
+
+    ::ng-deep {
+        .top-button {
+            width: fit-content;
+            height: 0.1vh;
+            border: none;
+            background-color: transparent;
+            margin: 0;
+            margin-top: 0.2vh;
+
+            ::ng-deep {
+                .material-icons {
+                    font-size: 2.5vh !important;
+                }
+            }
+        }
+
+        h5 {
+            font-size: 3vh;
+        }
+
+        .description {
+            white-space: pre-wrap;
+            height: 69vh;
+        }
+        
+        .description-data {
+            margin-right: 1vw !important;
+            width: 53vw;
+            overflow: auto;
+            border-right: 0.1vw solid gray;
+        }
+
+        .image-data {
+            width: 22vw;
+            height: 35vh;
+        }
+
+        img {
+            margin-top: 1vh;
+            max-width: 100%;
+            height: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 0.1vw !important;
+
+            border: 0.1vw solid gray;
+        }
+
+        .list-group {
+            max-height: 28vh;
+            overflow: auto;
+        }
+
+        .header {
+            height: 5vh;
+            border-bottom: 0.1vw solid gray;
+        }
+        .body {
+            height: 70vh;
+        }
+    }
+}

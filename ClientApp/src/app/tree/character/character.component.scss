@@ -3,7 +3,11 @@
         width: 160px;
         height: fit-content;
         position: absolute;
-
+        opacity: 0.6;
+        
+        &.selected {
+            opacity: 1;
+        }
         p {
             width: 160px;
             text-overflow: ellipsis;

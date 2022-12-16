@@ -1,0 +1,100 @@
+:host {
+    font-size: 2vh;
+
+    .mx {
+        margin-left: 1vw;
+        margin-right: 1vw;
+    }
+
+    .my {
+        margin-top: 1vh;
+        margin-bottom: 1vh;
+    }
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        opacity: 0.5;
+        z-index: 8001;
+    }
+
+    .data {
+        background-color: white;
+        z-index: 8002;
+        width: 75vw;
+    }
+
+    ::ng-deep {
+        .top-button {
+            width: fit-content;
+            height: 0.1vh;
+            border: none;
+            background-color: transparent;
+            margin: 0;
+            margin-top: 0.2vh;
+
+            ::ng-deep {
+                .material-icons {
+                    font-size: 2.5vh !important;
+                }
+            }
+        }
+
+        h5 {
+            font-size: 3vh;
+        }
+
+        img {
+            height: 32vh;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 0.1vw !important;
+
+            border: 0.1vw solid gray;
+        }
+
+        .header {
+            height: 5vh;
+            border-bottom: 0.1vw solid gray;
+        }
+
+        input {
+            width: 100% !important;
+            font-size: 3vh !important;
+        }
+
+        .buttons {
+            margin-top: 2vh;
+            margin-bottom: 2vh;
+        }
+
+        .p-dropdown {
+            width: 100% !important;
+            height: 5vh !important;
+            padding: 0 !important;
+            margin-top: 2vh !important;
+            border-width: 0.1vh;
+
+            ::ng-deep {
+                span {
+                    font-size: 3vh !important;
+                    margin: 0;
+                    padding: 0;
+
+                    &.p-dropdown-label {
+                        margin-left: 1vw;
+                        width: 5vw !important;
+                        text-overflow: ellipsis !important;
+                        white-space: nowrap !important;
+                        overflow: hidden;
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+}

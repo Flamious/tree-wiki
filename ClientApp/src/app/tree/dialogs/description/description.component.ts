@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Character } from '../character/character';
+import { Character } from 'src/app/objects/character';
+import { CharacterConnection } from 'src/app/objects/character-connection';
 
 
 @Component({
@@ -9,8 +10,9 @@ import { Character } from '../character/character';
 })
 export class DescriptionComponent {
     @Input() character: Character;
+    @Input() connections: CharacterConnection[];
     @Output() close = new EventEmitter();
-  
+    
     onClose() {
       this.close.emit();
     }
