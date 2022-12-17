@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32630.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeWikiApi", "TreeWikiApi\TreeWikiApi.csproj", "{50433686-F731-4C18-967B-0AD1F3CD4992}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{09A44CF6-64A3-475A-81E2-9E6BA45F355C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50433686-F731-4C18-967B-0AD1F3CD4992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50433686-F731-4C18-967B-0AD1F3CD4992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50433686-F731-4C18-967B-0AD1F3CD4992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50433686-F731-4C18-967B-0AD1F3CD4992}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09A44CF6-64A3-475A-81E2-9E6BA45F355C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09A44CF6-64A3-475A-81E2-9E6BA45F355C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09A44CF6-64A3-475A-81E2-9E6BA45F355C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09A44CF6-64A3-475A-81E2-9E6BA45F355C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {299488B4-26E8-4EC8-AF24-39EDC37015F2}
+	EndGlobalSection
+EndGlobal
