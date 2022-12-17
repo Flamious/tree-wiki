@@ -22,7 +22,6 @@ export class AddConnectionComponent {
       }
     })
 
-    console.log(characters);
     return characters;
   }
     @Input() selectedCharacter: Character;
@@ -35,7 +34,7 @@ export class AddConnectionComponent {
     title: string = '';
 
     onAdmit() {
-      this.admit.emit(new Connection(this.selectedCharacter, this.characterTo, this.title));
+      this.admit.emit(new Connection(null, this.selectedCharacter.id, this.characterTo.id, this.title));
       this.close.emit();
     }
 

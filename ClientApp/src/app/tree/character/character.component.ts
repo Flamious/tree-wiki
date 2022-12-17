@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ApiService } from 'src/app/api.service';
 import { Character } from 'src/app/objects/character';
 
 @Component({
@@ -15,6 +16,8 @@ export class CharacterComponent {
 
   dragging: boolean = false;
   @ViewChild('characterCard', {read: ElementRef}) cardElement: ElementRef;
+
+  constructor(private apiService: ApiService) { }
   
   public handleDragStart(): void {
     this.dragging = true;
@@ -45,6 +48,8 @@ export class CharacterComponent {
     this.character.y += Math.floor(y);
 
     event.source._dragRef.reset();
+
+    this.apiService.changeCharacterPosition(this.character.id, this.character.x, this.character.y);
   }
 
   getPosition(el: any) {

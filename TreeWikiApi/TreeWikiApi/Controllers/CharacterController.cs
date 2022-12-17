@@ -64,6 +64,13 @@ namespace TreeWikiApi.Controllers
             return this._characterService.GetCharacters();
         }
 
+        [HttpPut]
+        [Route("{id}/position")]
+        public CharacterDto ChangePosition([FromRoute] string id, [FromQuery] int x, [FromQuery] int y)
+        {
+            return this._characterService.ChangeCharacterPosition(id, x, y);
+        }
+
         public class NewCharacterDto
         {
             public IFormFile ImageFile { get; set; }

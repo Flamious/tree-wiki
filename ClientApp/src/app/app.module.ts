@@ -14,7 +14,11 @@ import { MatIconModule } from '@angular/material';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FileUploadModule } from 'primeng/fileupload';
 import { AddConnectionComponent } from './tree/dialogs/add-connection/add-connection.component';
+import { ApiService } from './api.service';
+import { AddCharacterComponent } from './tree/dialogs/add-character/add-character.component';
 
 
 const routes: Routes = [
@@ -28,7 +32,8 @@ const routes: Routes = [
     CharacterComponent,
     DescriptionComponent,
     SidebarComponent,
-    AddConnectionComponent
+    AddConnectionComponent,
+    AddCharacterComponent
   ],
   imports: [
     BrowserModule, 
@@ -40,8 +45,11 @@ const routes: Routes = [
     MatIconModule,
     DropdownModule,
     NoopAnimationsModule,
-    InputTextModule],
-  providers: [],
+    InputTextModule,
+    InputTextareaModule,
+    FileUploadModule
+  ],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

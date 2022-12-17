@@ -29,7 +29,7 @@ namespace TreeWikiApi.Controllers
         }
 
         [HttpPost]
-        public IEnumerable<ConnectionDto> AddConnection(ConnectionDto connection)
+        public IEnumerable<ConnectionDto> AddConnection([FromQuery] ConnectionDto connection)
         {
             this._connectionServce.AddConnection(connection);
 

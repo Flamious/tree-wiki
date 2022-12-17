@@ -18,6 +18,7 @@ namespace TreeWikiApi
 {
     public class Startup
     {
+        private string _policy = "sidePolicy";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,6 +31,17 @@ namespace TreeWikiApi
         {
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<IConnectionService, ConnectionService>();
+            services.AddCors(options => 
+            {
+                options.AddPolicy(_policy, builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed(origin => true)
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -53,13 +65,15 @@ namespace TreeWikiApi
             }
 
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(_policy);
 
             app.UseEndpoints(endpoints =>
             {

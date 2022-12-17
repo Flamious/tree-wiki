@@ -4,6 +4,8 @@ import { Connection } from '../objects/connection';
 import 'leader-line';
 import { Character } from '../objects/character';
 import { CharacterConnection } from '../objects/character-connection';
+import { ApiService } from '../api.service';
+import { NewCharacter } from '../objects/new-character';
 declare var LeaderLine: any;
 
 @Component({
@@ -17,81 +19,14 @@ export class TreeComponent implements AfterViewInit {
   position: { x: number, y: number } = { x: 0, y: 0 };
   isCharacterInfoOpened: boolean = false;
   isNewConnectionOpened: boolean = false;
+  isNewCharacterOpened: boolean = false;
   lines: any[] = [];
   selectedCharacter: Character = null;
   selectedCharacterConnections: CharacterConnection[] = null;
-  characters: Character[] = [
-    new Character(
-      '1', 'name-1csocdojcoisdjciosdjcojdiosj',
-      'https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg',
-      'nick-1', 'ss',
-      's',
-      500 + 2500, 0 + 2500
-    ),
-    new Character(
-      '21', 'name-2',
-      'https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg',
-      'nick-2', 'kdjndksvndksnvdskjnsdnvkjn', 'dsiojcdiojcdoidsj', 500 + 2500, 500 + 2500
-    ),
-    new Character(
-      '12', 'name-3',
-      'https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg',
-      'nick-3', 'kdjndksvndksnvdskjnsdnvkjn', 'dsiojcdiojcdoidsj\n\n\n\n\n\n\n\n\n\n\n\ndsiojcdiojcdoidsjdsiojcdiojcdoidsj\n\n\ndsiojcdiojcdoidsj\ndsiojcdiojcdoidsj\ndsiojcdiojcdoidsj\ndsiojcdiojcdoidsj\ndsiojcdiojcdoidsj\ndsiojcdiojcdoidsj\ndsiojcdiojcdoidsj', 50 + 2500, 500 + 2500
-    ),
-    new Character(
-      '1233', 'name-3',
-      'https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg',
-      'nick-3', 'kdjndksvndksnvdskjnsdnvkjn', 'dsiojcdiojcdoidsj', 100 + 2500, 200 + 2500
-    ),
-    new Character(
-      '1244', 'name-3',
-      'https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg',
-      'nick-3', 'kdjndksvndksnvdskjnsdnvkjn', 'dsiojcdiojcdoidsj', 200 + 2500, 100 + 2500
-    ),
-    new Character(
-      '1255', 'name-3',
-      'https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg',
-      'nick-3', 'kdjndksvndksnvdskjnsdnvkjn', 'dsiojcdiojcdoidsj', 300 + 2500, 300 + 2500
-    ),
-    new Character(
-      '1266', 'name-3',
-      'https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg',
-      'nick-3', 'kdjndksvndksnvdskjnsdnvkjn', 'dsiojcdiojcdoidsj', 600 + 2500, 800 + 2500
-    )];
-  connections: Connection[] = [new Connection(
-    this.characters[2],
-    this.characters[0],
-    'check'
-  ), new Connection(
-    this.characters[2],
-    this.characters[1],
-    'check2'
-  ), new Connection(
-    this.characters[2],
-    this.characters[3],
-    'check2'
-  ), new Connection(
-    this.characters[2],
-    this.characters[4],
-    'check2'
-  ), new Connection(
-    this.characters[2],
-    this.characters[5],
-    'check2'
-  ), new Connection(
-    this.characters[2],
-    this.characters[6],
-    'check2'
-  ), new Connection(
-    this.characters[0],
-    this.characters[3],
-    'check2'
-  ), new Connection(
-    this.characters[3],
-    this.characters[0],
-    'check2'
-  )];
+  connections: Connection[] = [];
+  characters: Character[] = [];
 
+  constructor(private apiService: ApiService) { }
   selectCharacter(character: Character) {
     if (this.selectedCharacter && this.selectedCharacter.id === character.id) {
       this.unselectCharacter();
@@ -126,6 +61,14 @@ export class TreeComponent implements AfterViewInit {
 
   closeAddNewConnection() {
     this.isNewConnectionOpened = false;
+  }
+
+  openAddNewCharacter() {
+    this.isNewCharacterOpened = true;
+  }
+
+  closeAddNewCharacter() {
+    this.isNewCharacterOpened = false;
   }
 
   buildLines() {
@@ -175,7 +118,21 @@ export class TreeComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.buildLines();
+    this.apiService.getCharacters().subscribe((result) => {
+      if(result !== undefined) {
+        this.characters = result;
+        this.apiService.getConnections().subscribe((result) => {
+          if(result !== undefined) {
+            this.connections = result;
+            this.buildLines();
+          }
+        });
+      }
+    });
+
+    this.characterCards.changes.subscribe(_ => {
+      this.buildLines();
+    })
   }
 
   onCharacterCardDrag() {
@@ -226,23 +183,60 @@ export class TreeComponent implements AfterViewInit {
 
     this.connections.map(c => {
       if (c.from === this.selectedCharacter.id) {
-        this.selectedCharacterConnections.push(new CharacterConnection(this.characters.find(x => x.id === c.to), c));
+        this.selectedCharacterConnections.push(new CharacterConnection(c.id, this.characters.find(x => x.id === c.to), c));
       }
     });
   }
 
   addConnection(connection: Connection) {
-    this.connections.push(connection);
-    this.setSeletedCharacterConnections();
-
-    this.buildLines();
+    this.apiService.addConnection(connection).subscribe((result) => {
+      if(result !== undefined) {
+        this.connections = result;
+        this.buildLines();
+        this.setSeletedCharacterConnections();
+      }
+    });
   }
 
   deleteConnection(connection: CharacterConnection) {
-    this.connections = this.connections.filter(item => {
-      return !(item.from === this.selectedCharacter.id && item.to === connection.connectionWith.id);
-    })
-    this.setSeletedCharacterConnections();
-    this.buildLines();
+    this.apiService.deleteConnection(connection.id).subscribe((result) => {
+      if(result !== undefined) {
+        this.connections = result;
+        this.buildLines();
+        this.setSeletedCharacterConnections();
+      }
+    });
+  }
+
+  addCharacter(character: NewCharacter) {
+   this.apiService.addCharacter(
+        character.file, 
+        character.characterName, 
+        character.description, 
+        this.position.x + 2500,
+        this.position.y + 2500
+      ).subscribe((result) => {
+      if(result !== undefined) {
+        this.characters = result;
+      }
+    });
+  }
+
+  deleteCharacter(character: Character) {
+    this.selectedCharacter = null;
+    this.selectedCharacterConnections = [];
+
+  this.apiService.deleteCharacter(character.id).subscribe((char_result) => {
+      if(char_result !== undefined) {
+        this.selectedCharacterConnections = [];
+        this.apiService.getConnections().subscribe((result) => {
+          if(result !== undefined) {
+
+            this.connections = result;
+            this.characters = char_result;
+          }
+        });
+      }
+    });
   }
 }

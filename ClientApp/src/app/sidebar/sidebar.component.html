@@ -1,5 +1,5 @@
 <div class="d-flex flex-column bg-primary sidebar m-0 p-0">
-    <span class="material-icons nav-el">person_add</span>
+    <span class="material-icons nav-el" (click)="addCharacter()">person_add</span>
     <span class="material-icons nav-el" [class.disabled]="!isCharacterSelected" (click)="openInfo()">person</span>
     <span class="material-icons nav-el" [class.disabled]="!isCharacterSelected" (click)="addConnection()">timeline</span>
     <!-- <span class="material-icons nav-el">cable</span> -->

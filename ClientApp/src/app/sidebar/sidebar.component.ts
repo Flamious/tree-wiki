@@ -9,6 +9,7 @@ export class SidebarComponent {
   @Input() isCharacterSelected: boolean = false
   @Output() openCharacterInfo = new EventEmitter();
   @Output() openAddConnection = new EventEmitter();
+  @Output() openAddCharacter = new EventEmitter();
 
   openInfo() {
     this.openCharacterInfo.emit();
@@ -16,5 +17,9 @@ export class SidebarComponent {
 
   addConnection() {
     this.openAddConnection.emit();
+  }
+
+  addCharacter() {
+    this.openAddCharacter.emit();
   }
 }

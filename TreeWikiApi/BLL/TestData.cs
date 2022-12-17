@@ -27,14 +27,14 @@ namespace BLL
                     ShortDescription = "Персонаж в игре Disco Elysium. Является лейтенантом в участке 57 и напарником Гарри в деле Повешенного.",
                     ImageSrc="Kim.webp",
                     X = 2550,
-                    Y = 3950
+                    Y = 2650
                 },
                 new CharacterDto()
                 {
                     Name = "Клаасье",
                     ShortDescription = "Клаасье (ориг. Klaasje) — персонаж в игре Disco Elysium.",
                     ImageSrc="Klaasje.webp",
-                    X = 3950,
+                    X = 2650,
                     Y = 2550
                 },
                 new CharacterDto()
@@ -42,8 +42,8 @@ namespace BLL
                     Name = "Куно",
                     ShortDescription = "Кууно де Рюйтер, более известный как Куно (ориг. Kuuno de Ruyter/Cuno) – персонаж в Disco Elysium. На момент действия игры мальчику 12 лет.",
                     ImageSrc="Cuno.webp",
-                    X = 3950,
-                    Y = 3950
+                    X = 2650,
+                    Y = 2650
                 },
             };
 

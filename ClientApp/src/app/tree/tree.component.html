@@ -1,6 +1,7 @@
 <app-sidebar 
     (openCharacterInfo)="openCharacterInfo()" 
     (openAddConnection)="openAddNewConnection()"
+    (openAddCharacter)="openAddNewCharacter()"
     [isCharacterSelected]="selectedCharacter !== null"
 ></app-sidebar>
 <div class="background-field">
@@ -21,6 +22,7 @@
             [character]="selectedCharacter" 
             [connections]="selectedCharacterConnections" 
             (close)="closeCharacterInfo()"
+            (delete)="deleteCharacter($event)"
             (deleteConnection)="deleteConnection($event)"
         ></app-description>
     </ng-container>
@@ -32,5 +34,11 @@
             (close)="closeAddNewConnection()"
             (admit)="addConnection($event)"
         ></app-add-connection>
+    </ng-container>
+    <ng-container *ngIf="isNewCharacterOpened">
+        <app-add-character
+            (close)="closeAddNewCharacter()"
+            (admit)="addCharacter($event)"
+        ></app-add-character>
     </ng-container>
 </div>

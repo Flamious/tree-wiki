@@ -1,17 +1,20 @@
 import { Character } from "./character";
 
 export class Connection {
+    id: string;
     from: string;
     to: string;
     title: string;
 
     constructor(
-        from: Character,
-        to: Character,
+        id: string,
+        from: string,
+        to: string,
         title: string
     ) {
-        this.from = from.id;
-        this.to = to.id;
+        this.id = id;
+        this.from = from;
+        this.to = to;
         this.title = title;
     }
 }

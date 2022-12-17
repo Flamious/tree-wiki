@@ -25,8 +25,7 @@
     .data {
         background-color: white;
         z-index: 8002;
-        width: 600pxvw;
-        height: 75vh;
+        width: 300px;
     }
 
     ::ng-deep {
@@ -49,44 +48,45 @@
             font-size: 3vh;
         }
 
-        .description {
-            white-space: pre-wrap;
-            height: 69vh;
+        .upload {
+            text-align: left;
+            width: 100%;
+            margin-top: 1vh;
+            height: 5vh;
         }
-        
-        .description-data {
-            margin-right: 1vw !important;
-            width: 380px;
-            overflow: auto;
-            border-right: 0.1vw solid gray;
+        textarea {
+            resize: none;
+            height: 15vh;
+            margin-top: 1vh;
+            width: 100%;
         }
-
         .image-data {
-            width: 220px;
-            height: 35vh;
+            height: 200px !important;
+            width: 100% !important;
         }
 
         img {
-            margin-top: 1vh;
-            width: 200px;
             height: 200px;
+            width: 200px;
             object-fit: cover;
             border-radius: 0.1vw !important;
 
             border: 0.1vw solid gray;
         }
 
-        .list-group {
-            max-height: 28vh;
-            overflow: auto;
-        }
-
         .header {
             height: 5vh;
             border-bottom: 0.1vw solid gray;
         }
-        .body {
-            height: 70vh;
+
+        input {
+            width: 100% !important;
+            font-size: 3vh !important;
+        }
+
+        .buttons {
+            margin-top: 2vh;
+            margin-bottom: 2vh;
         }
     }
 }

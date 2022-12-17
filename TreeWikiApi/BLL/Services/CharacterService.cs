@@ -12,6 +12,18 @@ namespace BLL.Services
             TestData.Characters.Add(character);
         }
 
+        public CharacterDto ChangeCharacterPosition(string id, int x, int y)
+        {
+            var character = this.GetCharacter(id);
+            if (character != null)
+            {
+                character.X = x;
+                character.Y = y;
+            }
+
+            return character;
+        }
+
         public CharacterDto GetCharacter(string id)
         {
             return TestData.Characters.FirstOrDefault(c => c.Id == id);
