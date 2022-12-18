@@ -36,6 +36,15 @@ namespace TreeWikiApi.Controllers
             return this._connectionServce.GetConnections();
         }
 
+        [HttpPut]
+        [Route("{id}")]
+        public IEnumerable<ConnectionDto> UpdateConnection([FromRoute] string id, [FromQuery] string newTitle)
+        {
+            this._connectionServce.UpdateConnection(id, newTitle);
+
+            return this._connectionServce.GetConnections();
+        }
+
         [HttpDelete]
         [Route("{id}")]
         public IEnumerable<ConnectionDto> DeleteConnection([FromRoute] string id)

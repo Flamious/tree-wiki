@@ -1,6 +1,7 @@
 ﻿using BLL.Dto;
 using BLL.Interfaces;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace BLL.Services
@@ -24,6 +25,14 @@ namespace BLL.Services
             return character;
         }
 
+        public void DeleteCharacterImage(string path)
+        {
+            if(File.Exists(path))
+            {
+                File.Delete(path);
+            };
+        }
+
         public CharacterDto GetCharacter(string id)
         {
             return TestData.Characters.FirstOrDefault(c => c.Id == id);
@@ -34,13 +43,32 @@ namespace BLL.Services
             return TestData.Characters;
         }
 
-        public void RemoveCharacter(string id)
+        public string RemoveCharacter(string id)
         {
             var character = this.GetCharacter(id);
+            string oldImagePath = null;
+
             if (character != null)
             {
+                oldImagePath = character.ImageSrc;
                 TestData.Characters.Remove(character);
             }
+
+            return oldImagePath;
+        }
+
+        public string UpdateCharacter(string id, CharacterDto newCharacter)
+        {
+            var character = this.GetCharacter(id);
+            string oldImagePath = null;
+
+            if (character != null)
+            {
+                oldImagePath = character.ImageSrc;
+                character.Update(newCharacter);
+            }
+
+            return oldImagePath;
         }
     }
 }

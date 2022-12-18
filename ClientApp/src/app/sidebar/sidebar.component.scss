@@ -7,23 +7,22 @@
         width: fit-content;
         height: 100%;
 
-        ::ng-deep {
-            .nav-el {
-                cursor: pointer;
-            }
-
+        .item-container {
+            border-bottom: 1px solid lightgray;
+            cursor: pointer;
             .material-icons {
                 display: inline-flex;
                 vertical-align: top;
-                font-size: 5vh !important;
-                margin-top: 1vh;
-                margin-left: 0.5vw;
-                margin-right: 0.5vw;
+                font-size: 28px !important;
+                margin: 10px;
                 color: white;
+            }
+            
+            &.disabled {
+                pointer-events: none;
 
-                &.disabled {
+                .material-icons {
                     color: gray;
-                    pointer-events: none;
                 }
             }
         }

@@ -58,8 +58,44 @@ namespace TreeWikiApi.Controllers
         [Route("{id}")]
         public IEnumerable<CharacterDto> DeleteCharacter([FromRoute] string id)
         {
+            string wwwroot = @"wwwroot\Images\";
             this._connectionService.RemoveConnectionsByCharacter(id);
-            this._characterService.RemoveCharacter(id);
+            string oldImagePath = this._characterService.RemoveCharacter(id);
+
+            if (oldImagePath != null)
+            {
+                this._characterService.DeleteCharacterImage(wwwroot + oldImagePath);
+            }
+
+            return this._characterService.GetCharacters();
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IEnumerable<CharacterDto>> UpdateCharacter([FromRoute] string id, [FromForm] NewCharacterDto character)
+        {
+            string fileName = $"{DateTime.Now.ToString("dd.MM.yyyy.HH.mm.ss")}-{character.ImageFile.FileName}";
+            string wwwroot = @"wwwroot\Images\";
+            string path = wwwroot + fileName;
+
+            using (var fileStream = new FileStream(path, FileMode.CreateNew))
+            {
+                await character.ImageFile.CopyToAsync(fileStream);
+            }
+
+            string oldImagePath = this._characterService.UpdateCharacter(id, new CharacterDto()
+            {
+                Name = character.Name,
+                ShortDescription = character.ShortDescription,
+                X = character.X,
+                Y = character.Y,
+                ImageSrc = fileName
+            });
+
+            if(oldImagePath != null)
+            {
+                this._characterService.DeleteCharacterImage(wwwroot + oldImagePath);
+            }
 
             return this._characterService.GetCharacters();
         }

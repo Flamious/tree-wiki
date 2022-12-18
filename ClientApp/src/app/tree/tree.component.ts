@@ -209,12 +209,12 @@ export class TreeComponent implements AfterViewInit {
   }
 
   addCharacter(character: NewCharacter) {
-   this.apiService.addCharacter(
+    this.apiService.addCharacter(
         character.file, 
         character.characterName, 
         character.description, 
-        this.position.x + 2500,
-        this.position.y + 2500
+        2500 - this.position.x,
+        2500 - this.position.y
       ).subscribe((result) => {
       if(result !== undefined) {
         this.characters = result;

@@ -40,5 +40,14 @@ namespace BLL.Services
                 TestData.Connections.Remove(c);
             }
         }
+
+        public void UpdateConnection(string id, string newTitle)
+        {
+            var connection = this.GetConnection(id);
+            if (connection != null)
+            {
+                connection.Title = newTitle;
+            }
+        }
     }
 }

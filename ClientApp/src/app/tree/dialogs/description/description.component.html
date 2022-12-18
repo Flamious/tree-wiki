@@ -15,6 +15,63 @@
                 </button>
             </div>
         </div>
+        <div class="row p-0 m-0">
+            <div class="col-4 p-0 m-0">
+                <div class="row p-0 m-0 mt-1">
+                    <div class="row p-0 m-0 mt-1">
+                        <div class="image-data mx-2">
+                            <img [src]="character.imageSrc" alt="Card image cap">
+                        </div>
+                    </div>
+                </div>
+                <div class="mx-3"><h5 class="my">Связи</h5></div>
+                <div class="list-group mx-3 my-1" *ngIf="connections">
+                    <ng-container *ngFor="let connection of connections">
+                        <div class="d-flex m-0 p-0 mr-1">
+                            <b class="flex-fill">{{connection.connectionWith.name}}</b>
+                            <div class="float-right">
+                                <button class="top-button m-0 p-0" (click)="onDeleteConnection(connection)">
+                                    <span class="material-icons">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="d-flex m-0 p-0 mr-1">
+                            <div class="flex-fill">
+                                <span>{{connection.connection.title}}</span>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="connections.length == 0">
+                        <div><span>Нет</span></div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-8 p-0 m-0">
+                <h5 class="mx my">Краткое описание</h5>
+                <div style="max-height: 64vh; overflow: auto;" class="mx">
+                    <span class="description">{{character.shortDescription}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="dialog d-flex justify-content-center align-items-center">
+    <div class="background" (click)="onClose()"></div>
+    <div class="data">
+        <div class="d-flex m-0 p-0 header">
+            <h5 class="flex-fill mx my">{{character.name}}</h5>
+            <div class="d-flex m-0 p-0 justify-content-end align-items-start">
+                <button class="top-button m-0 p-0" (click)="onDelete()">
+                    <span class="material-icons mx my">delete</span>
+                </button>
+                <button class="top-button m-0 p-0" (click)="onClose()">
+                    <span class="material-icons mx my">edit</span>
+                </button>
+                <button class="top-button m-0 p-0" (click)="onClose()">
+                    <span class="material-icons mx my">close</span>
+                </button>
+            </div>
+        </div>
         <div class="d-flex m-0 p-0 body" style="position: relative;">
             <div class="description-data m-0 p-0">
                 <h5 class="mx my">Краткое описание</h5>
@@ -47,4 +104,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

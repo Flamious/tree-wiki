@@ -25,7 +25,7 @@
     .data {
         background-color: white;
         z-index: 8002;
-        width: 75vw;
+        width: 500px;
     }
 
     ::ng-deep {
@@ -48,9 +48,26 @@
             font-size: 3vh;
         }
 
+        .upload {
+            text-align: left;
+            width: 100%;
+            margin-top: 1vh;
+            height: 5vh;
+        }
+        textarea {
+            resize: none;
+            height: 15vh;
+            margin-top: 1vh;
+            width: 100%;
+        }
+        .image-data {
+            height: 200px !important;
+            width: 100% !important;
+        }
+
         img {
-            height: 32vh;
-            aspect-ratio: 1 / 1;
+            height: 200px;
+            width: 200px;
             object-fit: cover;
             border-radius: 0.1vw !important;
 
@@ -71,7 +88,7 @@
             margin-top: 2vh;
             margin-bottom: 2vh;
         }
-
+        
         .p-dropdown {
             width: 100% !important;
             height: 5vh !important;

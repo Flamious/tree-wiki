@@ -7,6 +7,7 @@ namespace BLL.Interfaces
     {
         public IEnumerable<ConnectionDto> GetConnections();
         public ConnectionDto GetConnection(string id);
+        public void UpdateConnection(string id, string newTitle);
         public void RemoveConnection(string id);
         public void RemoveConnectionsByCharacter(string characterId);
         public void AddConnection(ConnectionDto Connection);
