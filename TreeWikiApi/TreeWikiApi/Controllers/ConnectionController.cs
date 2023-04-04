@@ -23,35 +23,38 @@ namespace TreeWikiApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ConnectionDto> GetConnections()
+        [Route("{work}")]
+        public IEnumerable<ConnectionDto> GetConnections([FromRoute] string work)
         {
-            return this._connectionServce.GetConnections();
+            return this._connectionServce.GetConnections(work);
         }
 
         [HttpPost]
-        public IEnumerable<ConnectionDto> AddConnection([FromQuery] ConnectionDto connection)
+        [Route("{work}")]
+        public IEnumerable<ConnectionDto> AddConnection([FromRoute] string work, [FromQuery] ConnectionDto connection)
         {
+            connection.Work = work;
             this._connectionServce.AddConnection(connection);
 
-            return this._connectionServce.GetConnections();
+            return this._connectionServce.GetConnections(work);
         }
 
         [HttpPut]
-        [Route("{id}")]
-        public IEnumerable<ConnectionDto> UpdateConnection([FromRoute] string id, [FromQuery] string newTitle)
+        [Route("{work}/{id}")]
+        public IEnumerable<ConnectionDto> UpdateConnection([FromRoute] string work, [FromRoute] string id, [FromQuery] string newTitle)
         {
             this._connectionServce.UpdateConnection(id, newTitle);
 
-            return this._connectionServce.GetConnections();
+            return this._connectionServce.GetConnections(work);
         }
 
         [HttpDelete]
-        [Route("{id}")]
-        public IEnumerable<ConnectionDto> DeleteConnection([FromRoute] string id)
+        [Route("{work}/{id}")]
+        public IEnumerable<ConnectionDto> DeleteConnection([FromRoute] string work, [FromRoute] string id)
         {
             this._connectionServce.RemoveConnection(id);
 
-            return this._connectionServce.GetConnections();
+            return this._connectionServce.GetConnections(work);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace BLL.Interfaces
 {
     public interface ICharacterService
     {
-        public IEnumerable<CharacterDto> GetCharacters();
+        public IEnumerable<CharacterDto> GetCharacters(string work);
         public CharacterDto GetCharacter(string id);
         public string UpdateCharacter(string id, CharacterDto character);
         public string RemoveCharacter(string id);

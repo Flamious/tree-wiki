@@ -2,12 +2,11 @@
 
 namespace BLL.Dto
 {
-    public class ConnectionDto
+    public class WorkDto
     {
         public string Id { get; } = Guid.NewGuid().ToString();
-        public string From { get; set; }
-        public string To { get; set; }
         public string Title { get; set; }
-        public string Work { get; set; }
+        public string Next { get; set; } = null;
+        public string Previous{ get; set; } = null;
     }
 }

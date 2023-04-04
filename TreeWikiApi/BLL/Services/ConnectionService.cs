@@ -17,9 +17,9 @@ namespace BLL.Services
             return TestData.Connections.FirstOrDefault(c => c.Id == id);
         }
 
-        public IEnumerable<ConnectionDto> GetConnections()
+        public IEnumerable<ConnectionDto> GetConnections(string work)
         {
-            return TestData.Connections;
+            return TestData.Connections.Where(c => c.Work == work).ToList();
         }
 
         public void RemoveConnection(string id)
@@ -33,7 +33,7 @@ namespace BLL.Services
 
         public void RemoveConnectionsByCharacter(string characterId)
         {
-            var connections = this.GetConnections().Where(c => c.From == characterId || c.To == characterId).ToList();
+            var connections = TestData.Connections.Where(c => c.From == characterId || c.To == characterId).ToList();
 
             foreach(var c in connections)
             {

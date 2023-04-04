@@ -38,9 +38,9 @@ namespace BLL.Services
             return TestData.Characters.FirstOrDefault(c => c.Id == id);
         }
 
-        public IEnumerable<CharacterDto> GetCharacters()
+        public IEnumerable<CharacterDto> GetCharacters(string work)
         {
-            return TestData.Characters;
+            return TestData.Characters.Where(c => c.Work == work).ToList();
         }
 
         public string RemoveCharacter(string id)

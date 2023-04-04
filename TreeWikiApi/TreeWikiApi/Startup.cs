@@ -31,6 +31,7 @@ namespace TreeWikiApi
         {
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<IConnectionService, ConnectionService>();
+            services.AddScoped<IWorkService, WorkService>();
             services.AddCors(options => 
             {
                 options.AddPolicy(_policy, builder =>
