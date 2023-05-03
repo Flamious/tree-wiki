@@ -7,9 +7,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class SidebarComponent {
   @Input() isCharacterSelected: boolean = false
+  @Input() isNextAvailable: boolean = false
+  @Input() isPreviousAvailable: boolean = false
   @Output() openCharacterInfo = new EventEmitter();
   @Output() openAddConnection = new EventEmitter();
   @Output() openAddCharacter = new EventEmitter();
+  @Output() openNextWork = new EventEmitter();
+  @Output() openPreviousWork = new EventEmitter();
 
   openInfo() {
     this.openCharacterInfo.emit();
@@ -21,5 +25,13 @@ export class SidebarComponent {
 
   addCharacter() {
     this.openAddCharacter.emit();
+  }
+
+  openNextWorkClick() {
+    this.openNextWork.emit();
+  }
+
+  openPreviousWorkClick() {
+    this.openPreviousWork.emit();
   }
 }

@@ -6,6 +6,7 @@ import { Character } from '../objects/character';
 import { CharacterConnection } from '../objects/character-connection';
 import { ApiService } from '../api.service';
 import { NewCharacter } from '../objects/new-character';
+import { Work } from '../objects/work';
 declare var LeaderLine: any;
 
 @Component({
@@ -21,11 +22,13 @@ export class TreeComponent implements AfterViewInit {
   isNewConnectionOpened: boolean = false;
   isNewCharacterOpened: boolean = false;
   lines: any[] = [];
+  selectedWork: Work = null;
   selectedCharacter: Character = null;
   selectedCharacterConnections: CharacterConnection[] = null;
+  works: Work[] = [];
   connections: Connection[] = [];
   characters: Character[] = [];
-
+  
   constructor(private apiService: ApiService) { }
   selectCharacter(character: Character) {
     if (this.selectedCharacter && this.selectedCharacter.id === character.id) {
@@ -118,21 +121,32 @@ export class TreeComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.apiService.getCharacters().subscribe((result) => {
+    this.apiService.getWorks().subscribe((result) => {
       if(result !== undefined) {
-        this.characters = result;
-        this.apiService.getConnections().subscribe((result) => {
-          if(result !== undefined) {
-            this.connections = result;
-            this.buildLines();
-          }
-        });
+        this.works = result;
+        if(result.length > 0) {
+          this.selectedWork = this.works[0];
+          this.selectWork(this.selectedWork);
+        }
       }
     });
 
     this.characterCards.changes.subscribe(_ => {
       this.buildLines();
     })
+  }
+
+  selectWork(work: Work) {
+    this.apiService.getCharacters(work.id).subscribe((result) => {
+      if(result !== undefined) {
+        this.apiService.getConnections(work.id).subscribe((connections) => {
+          if(connections !== undefined) {
+            this.connections = connections;
+            this.characters = result;
+          }
+        });
+      }
+    });
   }
 
   onCharacterCardDrag() {
@@ -189,7 +203,7 @@ export class TreeComponent implements AfterViewInit {
   }
 
   addConnection(connection: Connection) {
-    this.apiService.addConnection(connection).subscribe((result) => {
+    this.apiService.addConnection(connection, this.selectedWork.id).subscribe((result) => {
       if(result !== undefined) {
         this.connections = result;
         this.buildLines();
@@ -199,7 +213,7 @@ export class TreeComponent implements AfterViewInit {
   }
 
   deleteConnection(connection: CharacterConnection) {
-    this.apiService.deleteConnection(connection.id).subscribe((result) => {
+    this.apiService.deleteConnection(connection.id, this.selectedWork.id).subscribe((result) => {
       if(result !== undefined) {
         this.connections = result;
         this.buildLines();
@@ -214,7 +228,8 @@ export class TreeComponent implements AfterViewInit {
         character.characterName, 
         character.description, 
         2500 - this.position.x,
-        2500 - this.position.y
+        2500 - this.position.y,
+        this.selectedWork.id
       ).subscribe((result) => {
       if(result !== undefined) {
         this.characters = result;
@@ -226,17 +241,59 @@ export class TreeComponent implements AfterViewInit {
     this.selectedCharacter = null;
     this.selectedCharacterConnections = [];
 
-  this.apiService.deleteCharacter(character.id).subscribe((char_result) => {
-      if(char_result !== undefined) {
-        this.selectedCharacterConnections = [];
-        this.apiService.getConnections().subscribe((result) => {
-          if(result !== undefined) {
+    this.apiService.deleteCharacter(character.id, this.selectedWork.id).subscribe((char_result) => {
+        if(char_result !== undefined) {
+          this.selectedCharacterConnections = [];
+          this.apiService.getConnections(this.selectedWork.id).subscribe((result) => {
+            if(result !== undefined) {
 
-            this.connections = result;
-            this.characters = char_result;
-          }
-        });
-      }
+              this.connections = result;
+              this.characters = char_result;
+            }
+          });
+        }
     });
+  }
+
+  openNextWork() {
+    if (this.works.length === 0) {
+      return;
+    }
+
+    let index = this.works.findIndex(w => this.selectedWork.id === w.id);
+    if (index !== -1 && index < this.works.length - 1) {
+      this.selectedWork = this.works[index + 1];
+      this.selectWork(this.selectedWork);
+    }
+  }
+
+  openPreviousWork() {
+    if (this.works.length === 0) {
+      return;
+    }
+
+    let index = this.works.findIndex(w => this.selectedWork.id === w.id);
+    if (index !== -1 && index > 0) {
+      this.selectedWork = this.works[index - 1];
+      this.selectWork(this.selectedWork);
+    }
+  }
+
+  isNextAvailable() {
+    if (this.works.length === 0) {
+      return false;
+    }
+
+    let index = this.works.findIndex(w => this.selectedWork.id === w.id);
+    return index !== -1 && index < this.works.length - 1;
+  }
+
+  isPreviousAvailable() {
+    if (this.works.length === 0) {
+      return false;
+    }
+
+    let index = this.works.findIndex(w => this.selectedWork.id === w.id);
+    return index !== -1 && index > 0;
   }
 }

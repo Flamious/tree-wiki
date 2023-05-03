@@ -4,6 +4,7 @@ import { of, Observable } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 import { Character } from "./objects/character";
 import { Connection } from "./objects/connection";
+import { Work } from "./objects/work";
 
 export const url = "https://localhost:44390"
 
@@ -12,8 +13,8 @@ export class ApiService {
     private url = url;
     constructor(private http: HttpClient) { }
 
-    getCharacters(): Observable<Character[] | undefined> {
-        return this.http.get(`${this.url}/character`).pipe(map((data: any) => {
+    getCharacters(work: string): Observable<Character[] | undefined> {
+        return this.http.get(`${this.url}/character/${work}`).pipe(map((data: any) => {
             let characters = data;
             
             return characters.map(function (c: any): Character {
@@ -38,7 +39,7 @@ export class ApiService {
        this.http.put(`${this.url}/character/${id}/position?x=${x}&y=${y}`, {}).subscribe();
     }
 
-    addCharacter(file: any, name: string, description: string, x: number, y: number): Observable<Character[] | undefined> {
+    addCharacter(file: any, name: string, description: string, x: number, y: number, work: string): Observable<Character[] | undefined> {
         const formData = new FormData();
         formData.append('imageFile', file, file.name);
         formData.append('name', name);
@@ -46,7 +47,7 @@ export class ApiService {
         formData.append('x', `${x}`);
         formData.append('y', `${y}`);
 
-        return this.http.post(`${this.url}/character`, formData).pipe(map((data: any) => {
+        return this.http.post(`${this.url}/character/${work}`, formData).pipe(map((data: any) => {
             let characters = data;
             
             return characters.map(function (c: any): Character {
@@ -67,8 +68,8 @@ export class ApiService {
         }))
     }
 
-    deleteCharacter(id: string): Observable<Character[] | undefined> {
-        return this.http.delete(`${this.url}/character/${id}`).pipe(map((data: any) => {
+    deleteCharacter(id: string, work: string): Observable<Character[] | undefined> {
+        return this.http.delete(`${this.url}/character/${work}/${id}`).pipe(map((data: any) => {
             let characters = data;
             
             return characters.map(function (c: any): Character {
@@ -89,8 +90,8 @@ export class ApiService {
         }))
     }
 
-    getConnections(): Observable<Connection[] | undefined> {
-        return this.http.get(`${this.url}/connection`).pipe(map((data: any) => {
+    getConnections(work: string): Observable<Connection[] | undefined> {
+        return this.http.get(`${this.url}/connection/${work}`).pipe(map((data: any) => {
             let connections = data;
             
             return connections.map(function (c: any): Connection {
@@ -103,11 +104,11 @@ export class ApiService {
         }))
     }
 
-    addConnection(connection: Connection): Observable<Connection[] | undefined> {
+    addConnection(connection: Connection, work: string): Observable<Connection[] | undefined> {
         const from = `from=${connection.from}`;
         const to = `to=${connection.to}`;
         const title = `title=${connection.title}`;
-        return this.http.post(`${this.url}/connection?${from}&${to}&${title}`, {}).pipe(map((data: any) => {
+        return this.http.post(`${this.url}/connection/${work}?${from}&${to}&${title}`, {}).pipe(map((data: any) => {
             let connections = data;
             
             return connections.map(function (c: any): Connection {
@@ -120,12 +121,26 @@ export class ApiService {
         }))
     }
 
-    deleteConnection(id: string): Observable<Connection[] | undefined> {
-        return this.http.delete(`${this.url}/connection/${id}`).pipe(map((data: any) => {
+    deleteConnection(id: string, work: string): Observable<Connection[] | undefined> {
+        return this.http.delete(`${this.url}/connection/${work}/${id}`).pipe(map((data: any) => {
             let connections = data;
             
             return connections.map(function (c: any): Connection {
                 return new Connection(c.id, c.from, c.to, c.title);
+            });
+        }),
+        catchError(err => {
+            console.log(err);
+            return of(undefined);
+        }))
+    }
+
+    getWorks(): Observable<Work[] | undefined> {
+        return this.http.get(`${this.url}/work`).pipe(map((data: any) => {
+            let works = data;
+            
+            return works.map(function (c: any): Work {
+                return new Work(c.id, c.title, c.next, c.previous);
             });
         }),
         catchError(err => {

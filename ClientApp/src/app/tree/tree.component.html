@@ -2,7 +2,11 @@
     (openCharacterInfo)="openCharacterInfo()" 
     (openAddConnection)="openAddNewConnection()"
     (openAddCharacter)="openAddNewCharacter()"
+    (openNextWork)="openNextWork()"
+    (openPreviousWork)="openPreviousWork()"
     [isCharacterSelected]="selectedCharacter !== null"
+    [isNextAvailable]="isNextAvailable()"
+    [isPreviousAvailable]="isPreviousAvailable()"
 ></app-sidebar>
 <div class="background-field">
     <div 
