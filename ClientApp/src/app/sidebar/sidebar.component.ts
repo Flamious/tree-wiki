@@ -6,14 +6,18 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
+  @Input() isWorkSelected: boolean = false
   @Input() isCharacterSelected: boolean = false
   @Input() isNextAvailable: boolean = false
   @Input() isPreviousAvailable: boolean = false
+  @Input() treeName: string = ''
   @Output() openCharacterInfo = new EventEmitter();
   @Output() openAddConnection = new EventEmitter();
   @Output() openAddCharacter = new EventEmitter();
   @Output() openNextWork = new EventEmitter();
   @Output() openPreviousWork = new EventEmitter();
+  @Output() openAddWork = new EventEmitter();
+  @Output() openDeleteWork = new EventEmitter();
 
   openInfo() {
     this.openCharacterInfo.emit();
@@ -25,6 +29,14 @@ export class SidebarComponent {
 
   addCharacter() {
     this.openAddCharacter.emit();
+  }
+
+  addWork() {
+    this.openAddWork.emit();
+  }
+
+  deleteWork() {
+    this.openDeleteWork.emit();
   }
 
   openNextWorkClick() {

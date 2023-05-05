@@ -1,12 +1,8 @@
 ﻿using BLL.Dto;
 using BLL.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TreeWikiApi.Controllers
 {
@@ -26,6 +22,23 @@ namespace TreeWikiApi.Controllers
         [HttpGet]
         public IEnumerable<WorkDto> GetWorks()
         {
+            return this._workService.GetWorks();
+        }
+
+        [HttpPost]
+        public IEnumerable<WorkDto> AddWork(string title)
+        {
+            this._workService.AddWork(new WorkDto() { Title = title });
+
+            return this._workService.GetWorks();
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IEnumerable<WorkDto> DeleteWork([FromRoute] string id)
+        {
+            this._workService.DeleteWork(id);
+
             return this._workService.GetWorks();
         }
     }

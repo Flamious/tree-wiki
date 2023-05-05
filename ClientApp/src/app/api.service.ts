@@ -148,4 +148,32 @@ export class ApiService {
             return of(undefined);
         }))
     }
+
+    addWork(title: string): Observable<Work[] | undefined> {
+        return this.http.post(`${this.url}/work?title=${title}`, {}).pipe(map((data: any) => {
+            let works = data;
+            
+            return works.map(function (c: any): Work {
+                return new Work(c.id, c.title, c.next, c.previous);
+            });
+        }),
+        catchError(err => {
+            console.log(err);
+            return of(undefined);
+        }))
+    }
+
+    deleteWork(id: string): Observable<Work[] | undefined> {
+        return this.http.delete(`${this.url}/work/${id}`).pipe(map((data: any) => {
+            let works = data;
+            
+            return works.map(function (c: any): Work {
+                return new Work(c.id, c.title, c.next, c.previous);
+            });
+        }),
+        catchError(err => {
+            console.log(err);
+            return of(undefined);
+        }))
+    }
 }

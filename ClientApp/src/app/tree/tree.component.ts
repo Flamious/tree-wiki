@@ -137,6 +137,12 @@ export class TreeComponent implements AfterViewInit {
   }
 
   selectWork(work: Work) {
+    if (!work) {
+      this.connections = [];
+      this.characters = [];
+      return;
+    }
+
     this.apiService.getCharacters(work.id).subscribe((result) => {
       if(result !== undefined) {
         this.apiService.getConnections(work.id).subscribe((connections) => {
@@ -276,6 +282,42 @@ export class TreeComponent implements AfterViewInit {
     if (index !== -1 && index > 0) {
       this.selectedWork = this.works[index - 1];
       this.selectWork(this.selectedWork);
+    }
+  }
+
+  addWork() {
+    var title = prompt('Введите название нового дерева', '');
+    if(title) {
+      this.apiService.addWork(title).subscribe((result) => {
+        if(result !== undefined) {
+          this.works = result;
+          if(result.length > 0) {
+            this.selectedWork = this.works[this.works.length - 1];
+            this.selectWork(this.selectedWork);
+          }
+        }
+      });
+    }
+  }
+
+  deleteWork() {
+    if(!this.selectedWork) {
+      return;
+    }
+
+    if (confirm('Удалить текущее дерево?')) {
+      this.apiService.deleteWork(this.selectedWork.id).subscribe((result) => {
+        if(result !== undefined) {
+          this.works = result;
+          if(result.length > 0) {
+            this.selectedWork = this.works[0];
+            this.selectWork(this.selectedWork);
+          } else {
+            this.selectedWork = null;
+            this.selectWork(null);
+          }
+        }
+      });
     }
   }
 
