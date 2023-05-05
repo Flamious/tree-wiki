@@ -1,14 +1,14 @@
 :host {
-    font-size: 2vh;
+    font-size: 16px;
 
     .mx {
-        margin-left: 1vw;
-        margin-right: 1vw;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     .my {
-        margin-top: 1vh;
-        margin-bottom: 1vh;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
 
     .background {
@@ -31,33 +31,33 @@
     ::ng-deep {
         .top-button {
             width: fit-content;
-            height: 0.1vh;
+            height: 40px;
             border: none;
             background-color: transparent;
             margin: 0;
-            margin-top: 0.2vh;
+            margin-top: 5px;
 
             ::ng-deep {
                 .material-icons {
-                    font-size: 2.5vh !important;
+                    font-size: 20px !important;
                 }
             }
         }
 
         h5 {
-            font-size: 3vh;
+            font-size: 20px;
         }
 
         .upload {
             text-align: left;
             width: 100%;
-            margin-top: 1vh;
-            height: 5vh;
+            margin-top: 5px;
+            height: 30px;
         }
         textarea {
             resize: none;
-            height: 15vh;
-            margin-top: 1vh;
+            height: 120px;
+            margin-top: 5px;
             width: 100%;
         }
         .image-data {
@@ -69,24 +69,24 @@
             height: 200px;
             width: 200px;
             object-fit: cover;
-            border-radius: 0.1vw !important;
+            border-radius: 10px !important;
 
-            border: 0.1vw solid gray;
+            border: 1px solid gray;
         }
 
         .header {
-            height: 5vh;
-            border-bottom: 0.1vw solid gray;
+            height: 40px;
+            border-bottom: 1px solid gray;
         }
 
         input {
             width: 100% !important;
-            font-size: 3vh !important;
+            font-size: 16px !important;
         }
 
         .buttons {
-            margin-top: 2vh;
-            margin-bottom: 2vh;
+            margin-top: 16px;
+            margin-bottom: 16px;
         }
     }
 }

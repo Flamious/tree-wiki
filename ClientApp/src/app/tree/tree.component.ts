@@ -219,13 +219,15 @@ export class TreeComponent implements AfterViewInit {
   }
 
   deleteConnection(connection: CharacterConnection) {
-    this.apiService.deleteConnection(connection.id, this.selectedWork.id).subscribe((result) => {
-      if(result !== undefined) {
-        this.connections = result;
-        this.buildLines();
-        this.setSeletedCharacterConnections();
-      }
-    });
+    if (confirm('Удалить выбранную связь?')) {
+      this.apiService.deleteConnection(connection.id, this.selectedWork.id).subscribe((result) => {
+        if(result !== undefined) {
+          this.connections = result;
+          this.buildLines();
+          this.setSeletedCharacterConnections();
+        }
+      });
+    }
   }
 
   addCharacter(character: NewCharacter) {
@@ -244,21 +246,23 @@ export class TreeComponent implements AfterViewInit {
   }
 
   deleteCharacter(character: Character) {
-    this.selectedCharacter = null;
-    this.selectedCharacterConnections = [];
-
-    this.apiService.deleteCharacter(character.id, this.selectedWork.id).subscribe((char_result) => {
-        if(char_result !== undefined) {
-          this.selectedCharacterConnections = [];
-          this.apiService.getConnections(this.selectedWork.id).subscribe((result) => {
-            if(result !== undefined) {
-
-              this.connections = result;
-              this.characters = char_result;
-            }
-          });
-        }
-    });
+    if (confirm('Удалить выбранного персонажа?')) {
+      this.selectedCharacter = null;
+      this.selectedCharacterConnections = [];
+  
+      this.apiService.deleteCharacter(character.id, this.selectedWork.id).subscribe((char_result) => {
+          if(char_result !== undefined) {
+            this.selectedCharacterConnections = [];
+            this.apiService.getConnections(this.selectedWork.id).subscribe((result) => {
+              if(result !== undefined) {
+  
+                this.connections = result;
+                this.characters = char_result;
+              }
+            });
+          }
+      });
+    }
   }
 
   openNextWork() {
