@@ -1,9 +1,13 @@
 using BLL.Interfaces;
 using BLL.Services;
+using DAL.EF;
+using DAL.Interfaces;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,9 +33,23 @@ namespace TreeWikiApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string dbconectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddEntityFrameworkSqlServer().AddDbContext<DatabaseContext>(options => options.UseSqlServer(dbconectionString, ef => ef.MigrationsAssembly(typeof(DatabaseContext).Assembly.FullName)));
+            services.AddScoped<DbContext>(provider => provider.GetService<DatabaseContext>());
+
+            services.AddSingleton<IDatabaseContextFactory, DatabaseContextFactory>();
+
+            services.AddScoped<IWorkRepository, WorkRepository>(provider =>
+                new WorkRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
+            services.AddScoped<ICharacterRepository, CharacterRepository>(provider =>
+                new CharacterRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
+            services.AddScoped<IConnectionRepository, ConnectionRepository>(provider =>
+                new ConnectionRepository(dbconectionString, provider.GetService<IDatabaseContextFactory>()));
+
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<IConnectionService, ConnectionService>();
             services.AddScoped<IWorkService, WorkService>();
+
             services.AddCors(options => 
             {
                 options.AddPolicy(_policy, builder =>

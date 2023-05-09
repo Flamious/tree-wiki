@@ -24,14 +24,14 @@ namespace TreeWikiApi.Controllers
 
         [HttpGet]
         [Route("{work}")]
-        public IEnumerable<ConnectionDto> GetConnections([FromRoute] string work)
+        public IEnumerable<ConnectionDto> GetConnections([FromRoute] Guid work)
         {
             return this._connectionServce.GetConnections(work);
         }
 
         [HttpPost]
         [Route("{work}")]
-        public IEnumerable<ConnectionDto> AddConnection([FromRoute] string work, [FromQuery] ConnectionDto connection)
+        public IEnumerable<ConnectionDto> AddConnection([FromRoute] Guid work, [FromQuery] ConnectionDto connection)
         {
             connection.Work = work;
             this._connectionServce.AddConnection(connection);
@@ -41,7 +41,7 @@ namespace TreeWikiApi.Controllers
 
         [HttpPut]
         [Route("{work}/{id}")]
-        public IEnumerable<ConnectionDto> UpdateConnection([FromRoute] string work, [FromRoute] string id, [FromQuery] string newTitle)
+        public IEnumerable<ConnectionDto> UpdateConnection([FromRoute] Guid work, [FromRoute] Guid id, [FromQuery] string newTitle)
         {
             this._connectionServce.UpdateConnection(id, newTitle);
 
@@ -50,7 +50,7 @@ namespace TreeWikiApi.Controllers
 
         [HttpDelete]
         [Route("{work}/{id}")]
-        public IEnumerable<ConnectionDto> DeleteConnection([FromRoute] string work, [FromRoute] string id)
+        public IEnumerable<ConnectionDto> DeleteConnection([FromRoute] Guid work, [FromRoute] Guid id)
         {
             this._connectionServce.RemoveConnection(id);
 

@@ -1,5 +1,8 @@
 ﻿using BLL.Dto;
 using BLL.Interfaces;
+using DAL.Interfaces;
+using DAL.Repositories;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,42 +11,58 @@ namespace BLL.Services
 {
     public class CharacterService : ICharacterService
     {
-        public void AddCharacter(CharacterDto character)
+        private readonly ICharacterRepository _characterRepository;
+
+        public CharacterService(ICharacterRepository characterRepository)
         {
-            TestData.Characters.Add(character);
+            _characterRepository = characterRepository;
         }
 
-        public CharacterDto ChangeCharacterPosition(string id, int x, int y)
+        public void AddCharacter(CharacterDto character)
+        {
+            _characterRepository.CreateItem(character.ToEntity());
+        }
+
+        public CharacterDto ChangeCharacterPosition(Guid id, int x, int y)
         {
             var character = this.GetCharacter(id);
-            if (character != null)
+            if(character == null)
             {
-                character.X = x;
-                character.Y = y;
+                return null;
             }
 
-            return character;
+            character.X = x;
+            character.Y = y;
+
+            var result = _characterRepository.UpdateItem(character.ToEntity());
+            return new CharacterDto(result);
         }
 
         public void DeleteCharacterImage(string path)
         {
-            if(File.Exists(path))
+            if (File.Exists(path))
             {
                 File.Delete(path);
             };
         }
 
-        public CharacterDto GetCharacter(string id)
+        public CharacterDto GetCharacter(Guid id)
         {
-            return TestData.Characters.FirstOrDefault(c => c.Id == id);
+            var item = _characterRepository.GetItems().FirstOrDefault(character => character.Id == id);
+            if (item != null)
+            {
+                return new CharacterDto(item);
+            }
+
+            return null;
         }
 
-        public IEnumerable<CharacterDto> GetCharacters(string work)
+        public IEnumerable<CharacterDto> GetCharacters(Guid work)
         {
-            return TestData.Characters.Where(c => c.Work == work).ToList();
+            return _characterRepository.GetItems().Where(character => character.WorkId == work).Select(character => new CharacterDto(character));
         }
 
-        public string RemoveCharacter(string id)
+        public string RemoveCharacter(Guid id)
         {
             var character = this.GetCharacter(id);
             string oldImagePath = null;
@@ -51,13 +70,13 @@ namespace BLL.Services
             if (character != null)
             {
                 oldImagePath = character.ImageSrc;
-                TestData.Characters.Remove(character);
+                _characterRepository.DeleteItem(character.ToEntity());
             }
 
             return oldImagePath;
         }
 
-        public string UpdateCharacter(string id, CharacterDto newCharacter)
+        public string UpdateCharacter(Guid id, CharacterDto newCharacter)
         {
             var character = this.GetCharacter(id);
             string oldImagePath = null;
@@ -65,7 +84,7 @@ namespace BLL.Services
             if (character != null)
             {
                 oldImagePath = character.ImageSrc;
-                character.Update(newCharacter);
+                _characterRepository.UpdateItem(character.ToEntity());
             }
 
             return oldImagePath;

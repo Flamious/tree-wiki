@@ -1,15 +1,16 @@
 ﻿using BLL.Dto;
+using System;
 using System.Collections.Generic;
 
 namespace BLL.Interfaces
 {
     public interface IConnectionService
     {
-        public IEnumerable<ConnectionDto> GetConnections(string work);
-        public ConnectionDto GetConnection(string id);
-        public void UpdateConnection(string id, string newTitle);
-        public void RemoveConnection(string id);
-        public void RemoveConnectionsByCharacter(string characterId);
+        public IEnumerable<ConnectionDto> GetConnections(Guid work);
+        public ConnectionDto GetConnection(Guid id);
+        public ConnectionDto UpdateConnection(Guid id, string newTitle);
+        public void RemoveConnection(Guid id);
+        public void RemoveConnectionsByCharacter(Guid characterId);
         public void AddConnection(ConnectionDto Connection);
     }
 }

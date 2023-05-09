@@ -1,5 +1,7 @@
 ﻿using BLL.Dto;
 using BLL.Interfaces;
+using DAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,35 +11,43 @@ namespace BLL.Services
     {
         private readonly ICharacterService _characterService;
         private readonly IConnectionService _connectionService;
+        private readonly IWorkRepository _workRepository;
 
-        public WorkService(ICharacterService characterService, IConnectionService connectionService)
+        public WorkService(ICharacterService characterService, IConnectionService connectionService, IWorkRepository workRepository)
         {
             _characterService = characterService;
             _connectionService = connectionService;
+            _workRepository = workRepository;
         }
 
         public IEnumerable<WorkDto> GetWorks()
         {
-            return TestData.Works;
+            return _workRepository.GetItems().Select(work => new WorkDto(work));
         }
 
-        public WorkDto GetWork(string id)
+        public WorkDto GetWork(Guid id)
         {
-            return TestData.Works.FirstOrDefault(c => c.Id == id);
+            var item = _workRepository.GetItems().FirstOrDefault(work => work.Id == id);
+            if(item != null)
+            {
+                return new WorkDto(item);
+            }
+
+            return null;
         }
 
         public void AddWork(WorkDto work)
         {
-            TestData.Works.Add(work);
+            _workRepository.CreateItem(work.ToEntity());
         }
 
-        public void DeleteWork(string id)
+        public void DeleteWork(Guid id)
         {
             var work = this.GetWork(id);
             if (work != null)
             {
                 string wwwroot = @"wwwroot\Images\";
-                var characters = TestData.Characters.Where(c => c.Work == id).ToList();
+                var characters = _characterService.GetCharacters(id).ToList();
                 var connections = TestData.Connections.Where(c => c.Work == id).ToList();
 
                 foreach (var connection in connections)
@@ -47,7 +57,7 @@ namespace BLL.Services
 
                 foreach (var character in characters)
                 {
-                    this._characterService.RemoveCharacter(id);
+                    this._characterService.RemoveCharacter(character.Id);
                     if (character.ImageSrc != null)
                     {
                         this._characterService.DeleteCharacterImage(wwwroot + character.ImageSrc);
@@ -56,7 +66,7 @@ namespace BLL.Services
                     _characterService.RemoveCharacter(character.Id);
                 }
 
-                TestData.Works.Remove(work);
+                _workRepository.DeleteItem(work.ToEntity());
             }
         }
     }

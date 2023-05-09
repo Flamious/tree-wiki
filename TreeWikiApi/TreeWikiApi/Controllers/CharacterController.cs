@@ -27,14 +27,14 @@ namespace TreeWikiApi.Controllers
 
         [HttpGet]
         [Route("{work}")]
-        public IEnumerable<CharacterDto> GetCharacters([FromRoute] string work)
+        public IEnumerable<CharacterDto> GetCharacters([FromRoute] Guid work)
         {
             return this._characterService.GetCharacters(work);
         }
 
         [HttpPost]
         [Route("{work}")]
-        public async Task<IEnumerable<CharacterDto>> AddCharacter([FromRoute] string work, [FromForm] NewCharacterDto character)
+        public async Task<IEnumerable<CharacterDto>> AddCharacter([FromRoute] Guid work, [FromForm] NewCharacterDto character)
         {
             string fileName = $"{DateTime.Now.ToString("dd.MM.yyyy.HH.mm.ss")}-{character.ImageFile.FileName}";
             string path = @"wwwroot\Images\" + fileName;
@@ -59,7 +59,7 @@ namespace TreeWikiApi.Controllers
 
         [HttpDelete]
         [Route("{work}/{id}")]
-        public IEnumerable<CharacterDto> DeleteCharacter([FromRoute] string work, [FromRoute] string id)
+        public IEnumerable<CharacterDto> DeleteCharacter([FromRoute] Guid work, [FromRoute] Guid id)
         {
             string wwwroot = @"wwwroot\Images\";
             this._connectionService.RemoveConnectionsByCharacter(id);
@@ -75,7 +75,7 @@ namespace TreeWikiApi.Controllers
 
         [HttpPut]
         [Route("{work}/{id}")]
-        public async Task<IEnumerable<CharacterDto>> UpdateCharacter([FromRoute] string work, [FromRoute] string id, [FromForm] NewCharacterDto character)
+        public async Task<IEnumerable<CharacterDto>> UpdateCharacter([FromRoute] Guid work, [FromRoute] Guid id, [FromForm] NewCharacterDto character)
         {
             string fileName = $"{DateTime.Now.ToString("dd.MM.yyyy.HH.mm.ss")}-{character.ImageFile.FileName}";
             string wwwroot = @"wwwroot\Images\";
@@ -105,7 +105,7 @@ namespace TreeWikiApi.Controllers
 
         [HttpPut]
         [Route("{id}/position")]
-        public CharacterDto ChangePosition([FromRoute] string id, [FromQuery] int x, [FromQuery] int y)
+        public CharacterDto ChangePosition([FromRoute] Guid id, [FromQuery] int x, [FromQuery] int y)
         {
             return this._characterService.ChangeCharacterPosition(id, x, y);
         }

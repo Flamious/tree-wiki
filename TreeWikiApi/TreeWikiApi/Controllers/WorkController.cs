@@ -2,6 +2,7 @@
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 
 namespace TreeWikiApi.Controllers
@@ -35,7 +36,7 @@ namespace TreeWikiApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public IEnumerable<WorkDto> DeleteWork([FromRoute] string id)
+        public IEnumerable<WorkDto> DeleteWork([FromRoute] Guid id)
         {
             this._workService.DeleteWork(id);
 
