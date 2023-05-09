@@ -139,6 +139,7 @@ export class TreeComponent implements AfterViewInit {
   selectWork(work: Work) {
     if (!work) {
       this.connections = [];
+      this.selectedCharacter = null;
       this.characters = [];
       return;
     }
@@ -148,6 +149,7 @@ export class TreeComponent implements AfterViewInit {
         this.apiService.getConnections(work.id).subscribe((connections) => {
           if(connections !== undefined) {
             this.connections = connections;
+            this.selectedCharacter = null;
             this.characters = result;
           }
         });

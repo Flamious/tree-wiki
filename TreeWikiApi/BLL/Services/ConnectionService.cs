@@ -35,7 +35,7 @@ namespace BLL.Services
 
         public IEnumerable<ConnectionDto> GetConnections(Guid work)
         {
-            return _connectionRepository.GetItems().Select(connection => new ConnectionDto(connection));
+            return _connectionRepository.GetItems().Where(character => character.WorkId == work).Select(connection => new ConnectionDto(connection));
         }
 
         public void RemoveConnection(Guid id)

@@ -48,7 +48,7 @@ namespace BLL.Services
             {
                 string wwwroot = @"wwwroot\Images\";
                 var characters = _characterService.GetCharacters(id).ToList();
-                var connections = TestData.Connections.Where(c => c.Work == id).ToList();
+                var connections = _connectionService.GetConnections(id).ToList();
 
                 foreach (var connection in connections)
                 {
